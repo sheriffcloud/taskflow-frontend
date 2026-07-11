@@ -1,0 +1,17 @@
+networks:
+  taskflow-frontend:
+    driver: bridge
+
+services:
+  frontend:
+    build: ./frontend
+    # Builds from the frontend folder itself
+    # No need to reference another repo
+    ports:
+      - "5173:80"
+    environment:
+      VITE_API_URL: ${VITE_API_URL:-http://localhost:8080}
+      # Points to the api-gateway running from taskflow-backend
+      # Default: http://localhost:8080
+      # Override in .env if your backend runs on different port
+    networks: [taskflow-frontend]
